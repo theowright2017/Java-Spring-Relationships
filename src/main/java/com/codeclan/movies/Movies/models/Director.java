@@ -21,7 +21,7 @@ public class Director {
 
     public Director(String name){
         this.name = name;
-        this.films = new ArrayList<>();
+        this.films = new ArrayList<>(); // onetomany, dont need to new list
     }
 
     public Director() {

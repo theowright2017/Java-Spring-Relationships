@@ -1,6 +1,8 @@
 package com.codeclan.movies.Movies.models;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class Actor {
     private int salary;
 
     @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(
             name = "actors_films",
              joinColumns = { @JoinColumn(
@@ -47,6 +50,8 @@ public class Actor {
 
     public Actor() {
     }
+
+
 
     public void addFilm(Film film){
         this.films.add(film);

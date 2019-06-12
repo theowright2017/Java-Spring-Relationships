@@ -1,6 +1,8 @@
 package com.codeclan.movies.Movies.models;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +18,26 @@ public class Film {
     @Column(name="title")
     private String title;
 
-    @Column
-    private Enum genre;
+    @Column(name = "genre")
+    @Enumerated(value = EnumType.STRING) // this returns genre as string, instead of object value
+    private GenreType genre; // to pass in through insomnia, save as "HORROR"
 
     @ManyToOne
     @JoinColumn(name = "director_id", nullable = false)
     private Director director;
 
     @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE) // repeat action for all sides of relationship,
+    // using .ALL will also cascade delete everything, don't use ALL
     @JoinTable(
-            name = "films_actors",
+            name = "actors_films",   // is same name as join table in actor class
             joinColumns = { @JoinColumn(
-                    name = "actor_id",
+                    name = "film_id",
                     nullable = false,
                     updatable = false
             )},
             inverseJoinColumns = { @JoinColumn(
-                    name = "film_id",
+                    name = "actor_id",
                     nullable = false,
                     updatable = false
             )}
@@ -49,6 +54,8 @@ public class Film {
 
     public Film() {
     }
+
+
 
     public void addActor(Actor actor){
         this.actors.add(actor);
@@ -74,7 +81,7 @@ public class Film {
         return genre;
     }
 
-    public void setGenre(Enum genre) {
+    public void setGenre(GenreType genre) {
         this.genre = genre;
     }
 

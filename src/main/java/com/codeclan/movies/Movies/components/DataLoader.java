@@ -13,6 +13,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -24,6 +26,8 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     DirectorRepository directorRepository;
+
+    public DataLoader(){} // need empty constructor to seed
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -51,6 +55,13 @@ public class DataLoader implements ApplicationRunner {
         diehard.addActor(sam);
         diehard.addActor(bruce);
 
+        filmRepository.save(hatefulEight);   //  need to save again to make connections
+        filmRepository.save(pulp);
+        filmRepository.save(diehard);
+
+        List<Film> foundFilms = filmRepository.getFilmsByDirectorId(tarantino.getId());
+//
+        List<Film> horrorFilms = filmRepository.getFilmsByGenre(GenreType.THRILLER);
 
 
     }

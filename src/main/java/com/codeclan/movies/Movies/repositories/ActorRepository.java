@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@RepositoryRestResource       // if no projection then just repository
 public interface ActorRepository extends JpaRepository<Actor, Long> {
 
     List<Actor> findActorBySalary(int salary);
